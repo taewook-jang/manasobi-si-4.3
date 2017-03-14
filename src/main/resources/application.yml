@@ -1,0 +1,130 @@
+#debug: true
+
+server:
+  url: localhost
+  port: 8080
+
+# Active Profiles :: [local|dev|test|stage|prod]
+spring:
+  profiles.active: local
+
+  # Thymeleaf
+  thymeleaf:
+    #prefix: classpath:/templates
+    mode: HTML
+    #cache: false
+
+  http:
+    # Multipart
+    multipart:
+      enabled: true
+      file-size-threshold: 0
+      max-file-size: 8192Mb
+      max-request-size: 8192Mb
+
+    # HTTP Encoding
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+  # Spring MVC
+  mvc:
+    date-format: 'yyyy-MM-dd HH:mm:ss'
+    dispatch-trace-request: true
+    dispatch-options-request: true
+    favicon.enabled: false
+    ignore-default-model-on-redirect: true
+    locale: ko_KR
+    throw-exception-if-no-handler-found: false
+
+  # JMX
+  jmx.enabled: false
+
+  # H2
+  #h2.console.enabled: true
+  #h2.console.path: /h2-console
+
+# Security
+security.basic.enabled: false
+
+# 전문 관련 설정
+msg.exchange.gateway:
+  security-corp:
+    ip: localhost
+    port: 33001
+  shbank:
+    ip: localhost
+    port: 33001
+
+# ONSEMIRO
+onsemiro:
+  # App Name
+  app-name: shbank-atms-manager
+  # System Name
+  system-name: onsemiro
+  # DataSource
+  data-source:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    initial-size: 5
+    max-idle: -1
+    max-total: 10
+    max-wait-millis: 3000
+    slow-query-threshold: 3000
+    hibernate:
+      hbm2ddlAuto: none
+      databaseType: oracle
+  # File Upload
+  upload.repository: /Workspace/tempDir
+  # Log
+  log:
+    level: ERROR
+    slack:
+      enabled: false
+      web-hook-url:
+      channel: error_logs
+    database.enabled: true
+    admin-url:
+  #project base path
+  project-base-path:
+
+--- # Profile -------------------- :: local :: --------------------
+spring:
+  profiles: local
+  thymeleaf.cache: false
+  #devtools.livereload.enabled: true
+
+# ONSEMIRO
+onsemiro:
+  # DataSource
+  data-source:
+    #url: jdbc:mariadb://localhost:3306/axboot
+    url: jdbc:oracle:thin:@shinhan.cwozeqnjffgl.ap-northeast-2.rds.amazonaws.com:1521:shinhan
+    username: tw_jang
+    password: ParkSt0re!
+
+# Logging
+logging.config: classpath:logback-local.xml
+
+
+--- # Profile -------------------- :: dev :: --------------------
+spring:
+  profiles: dev
+
+
+--- # Profile -------------------- :: test :: --------------------
+spring:
+  profiles: test
+
+--- # Profile -------------------- :: prod :: --------------------
+spring:
+  profiles: prod
+
+# Server Config
+server:
+  url: localhost
+  port: 80
+
+# Logging
+logging.config: /var/log/logback.xml
+
