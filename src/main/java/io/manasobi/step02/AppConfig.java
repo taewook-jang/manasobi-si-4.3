@@ -31,4 +31,9 @@ public class AppConfig {
         return MessageChannels.queue(5).wireTap(loggerChannel).get();
     }
 
+    @Bean
+    public PollableChannel tempChannel() {
+        return MessageChannels.rendezvous().get();
+    }
+
 }
