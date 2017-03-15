@@ -1,7 +1,7 @@
 package io.manasobi;
 
-import io.manasobi.step02.AppRunner;
-import io.manasobi.step02.Order;
+import io.manasobi.step03.AppRunner;
+import io.manasobi.step03.Order;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

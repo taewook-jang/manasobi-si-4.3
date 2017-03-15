@@ -1,4 +1,4 @@
-package io.manasobi.step01;
+package io.manasobi.step03;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,6 +1,6 @@
 package io.manasobi;
 
-import io.manasobi.step01.AppRunner;
+import io.manasobi.step02.AppRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

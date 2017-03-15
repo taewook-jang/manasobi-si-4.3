@@ -1,4 +1,4 @@
-package io.manasobi.step01;
+package io.manasobi.step02;
 
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.stereotype.Component;

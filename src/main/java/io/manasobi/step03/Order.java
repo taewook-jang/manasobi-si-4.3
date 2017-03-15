@@ -1,4 +1,4 @@
-package io.manasobi.step02;
+package io.manasobi.step03;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

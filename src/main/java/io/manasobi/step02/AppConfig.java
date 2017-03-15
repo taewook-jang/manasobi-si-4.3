@@ -1,6 +1,5 @@
 package io.manasobi.step02;
 
-import io.manasobi.step01.LoggerConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,12 +27,12 @@ public class AppConfig {
 
     @Bean
     public PollableChannel outputChannel() {
-        return MessageChannels.queue(5).wireTap(loggerChannel).get();
+        return MessageChannels.queue(5)
+                              .wireTap(loggerChannel)
+                              .get();
     }
 
-    @Bean
-    public PollableChannel tempChannel() {
-        return MessageChannels.rendezvous().get();
-    }
+
+
 
 }
