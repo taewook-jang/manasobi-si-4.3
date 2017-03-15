@@ -33,16 +33,16 @@ public class Step02Test {
         Order myOrder = new Order("myOrder");
         Order manasobiOrder = new Order("myOrder");
 
-        inputChannel.send(new GenericMessage<String>("world"));
+        inputChannel.send(new GenericMessage("world"));
         inputChannel.send(MessageBuilder.withPayload("test").build());
-        inputChannel.send(new GenericMessage<Order>(myOrder));
+        inputChannel.send(new GenericMessage(myOrder));
         inputChannel.send(MessageBuilder.withPayload(manasobiOrder).build());
 
 
-        log.info("result :: {}", outputChannel.receive().getPayload());
-        log.info("result :: {}", outputChannel.receive().getPayload());
-        log.info("result :: {}", outputChannel.receive().getPayload());
-        log.info("result :: {}", outputChannel.receive().getPayload());
+        System.out.println(outputChannel.receive().getPayload());
+        System.out.println(outputChannel.receive().getPayload());
+        System.out.println(outputChannel.receive().getPayload());
+        System.out.println(outputChannel.receive().getPayload());
 
     }
 
