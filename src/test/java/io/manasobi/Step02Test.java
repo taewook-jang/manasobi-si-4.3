@@ -23,17 +23,7 @@ public class Step02Test {
     public void test() {
 
         Integer index = new Integer(25);
-
         inputChannel.send(MessageBuilder.withPayload(index).build());
-
-        /*try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-
-
     }
 
 }

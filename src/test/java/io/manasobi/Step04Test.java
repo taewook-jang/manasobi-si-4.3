@@ -30,9 +30,7 @@ public class Step04Test {
     @Test
     public void test() {
 
-
         channel.subscribe(messageHandler);
-
 
         MyData myData = new MyData(5, "id-001");
 

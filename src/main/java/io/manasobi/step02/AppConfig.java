@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.channel.MessageChannels;
 import org.springframework.messaging.MessageChannel;
@@ -21,18 +22,15 @@ public class AppConfig {
     private MessageChannel loggerChannel;
 
     @Bean
-    public MessageChannel inputChannel() {
+    public DirectChannel inputChannel() {
         return MessageChannels.direct().get();
     }
 
     @Bean
-    public PollableChannel outputChannel() {
-        return MessageChannels.queue(5)
+    public DirectChannel outputChannel() {
+        return MessageChannels.direct()
                               .wireTap(loggerChannel)
                               .get();
     }
-
-
-
 
 }

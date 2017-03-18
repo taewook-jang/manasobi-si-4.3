@@ -12,7 +12,7 @@
         <appender-ref ref="CONSOLE" />
     </root>
 
-    <logger name="com.bgf.shbank" level="DEBUG"/>
+    <logger name="io.manasobi" level="DEBUG"/>
 
     <!-- Framework Category -->
     <logger name="org.apache" level="WARN" />

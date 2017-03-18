@@ -22,11 +22,6 @@ public class OtherDataToEmptyMyData implements MessageConverter {
 
     @Override
     public Message<?> toMessage(Object payload, MessageHeaders headers) {
-
-        /*if (payload instanceof OtherData) {
-            payload = new MyData(9, "id-999");
-        }*/
-
         return MessageBuilder.createMessage(payload, headers);
     }
 }
