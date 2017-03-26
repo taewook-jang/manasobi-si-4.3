@@ -27,10 +27,11 @@ public class AppConfig {
     }
 
     @Bean
-    public DirectChannel outputChannel() {
-        return MessageChannels.direct()
+    public PollableChannel outputChannel() {
+        return MessageChannels.queue(50)
                               .wireTap(loggerChannel)
                               .get();
     }
+
 
 }

@@ -10,6 +10,7 @@ import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.channel.MessageChannels;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.PollableChannel;
+import org.springframework.messaging.SubscribableChannel;
 
 /**
  * Created by tw.jang on 2017-03-14.
@@ -20,8 +21,8 @@ import org.springframework.messaging.PollableChannel;
 public class AppConfig {
 
     @Bean
-    public DirectChannel channel() {
-        return MessageChannels.direct()
+    public SubscribableChannel channel() {
+        return MessageChannels.publishSubscribe()
                               .datatype(MyData.class, String.class, Integer.class)
                               .messageConverter(messageConverter())
                               .get();

@@ -9,6 +9,9 @@ import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by tw.jang on 2017-03-14.
  */
@@ -20,10 +23,13 @@ public class Step02Test {
     private MessageChannel inputChannel;
 
     @Test
-    public void test() {
+    public void test() throws Exception {
 
-        Integer index = new Integer(25);
-        inputChannel.send(MessageBuilder.withPayload(index).build());
+        for (int i = 0; i < 5; i++) {
+            inputChannel.send(MessageBuilder.withPayload(new Random().nextInt(10)).build());
+        }
+
+        TimeUnit.SECONDS.sleep(5);
     }
 
 }

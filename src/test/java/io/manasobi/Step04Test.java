@@ -1,15 +1,13 @@
 package io.manasobi;
 
-import io.manasobi.step04.AppRunner;
-import io.manasobi.step04.DataMessageHandler;
-import io.manasobi.step04.MyData;
-import io.manasobi.step04.OtherData;
+import io.manasobi.step04.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.integration.channel.DirectChannel;
+import org.springframework.messaging.SubscribableChannel;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -22,15 +20,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class Step04Test {
 
     @Autowired
-    private DirectChannel channel;
+    private SubscribableChannel channel;
 
     @Autowired
     private DataMessageHandler messageHandler;
+
+    @Autowired
+    private DataMessage2Handler messageHandler2;
 
     @Test
     public void test() {
 
         channel.subscribe(messageHandler);
+        channel.subscribe(messageHandler2);
 
         MyData myData = new MyData(5, "id-001");
 

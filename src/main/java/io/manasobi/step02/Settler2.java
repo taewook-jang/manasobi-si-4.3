@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class Settler {
+public class Settler2 {
 
-    @ServiceActivator(inputChannel = "outputChannel", poller = @Poller(fixedDelay = "1000", maxMessagesPerPoll = "1"))
+    @ServiceActivator(inputChannel = "outputChannel", poller = @Poller(fixedDelay = "10", maxMessagesPerPoll = "1"))
     public void settle(Integer index) {
-        log.info("Index: {}", index);
+        log.info("Index2: {}", index);
     }
 
 }

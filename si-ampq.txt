@@ -1,0 +1,100 @@
+
+It provides some fluent for AMQP:
+
+@Bean
+public IntegrationFlow amqpFlow() {
+     return IntegrationFlows.from(Amqp.inboundGateway(this.rabbitConnectionFactory, queue()))
+           .transform("hello "::concat)
+           .transform(String.class, String::toUpperCase)
+           .get();
+}
+
+@Bean
+public IntegrationFlow amqpOutboundFlow() {
+       return IntegrationFlows.from(Amqp.channel("amqpOutboundInput", this.rabbitConnectionFactory))
+               .handle(Amqp.outboundAdapter(this.amqpTemplate).routingKeyExpression("headers.routingKey"))
+               .get();
+}
+
+
+From annotation perspective you should configure something like this using classes from Spring Integration directly:
+
+@Bean
+public AmqpInboundGateway amqpInbound() {
+    AmqpInboundGateway gateway = new AmqpInboundGateway(new SimpleMessageListenerContainer(this.rabbitConnectionFactory));
+    gateway.setRequestChannel(inboundChanne());
+    return gateway;
+}
+
+@Bean
+@ServiceActivator(inputChannel = "amqpOutboundChannel")
+public AmqpOutboundEndpoint amqpOutbound() {
+    AmqpOutboundEndpoint handler = new AmqpOutboundEndpoint(this.rabbitTemplate);
+    handler.setOutputChannel(amqpReplyChannel());
+    return handler;
+}
+
+
+@Configuration
+ public class RabbitMQConfiguration {
+
+    @Bean
+    public ConnectionFactory connectionFactory() {
+        CachingConnectionFactory connectionFactory =
+            new CachingConnectionFactory("localhost");
+        return connectionFactory;
+    }
+
+    @Bean
+    public AmqpAdmin amqpAdmin() {
+        RabbitAdmin admin=new RabbitAdmin(connectionFactory());
+        admin.declareQueue(queue());
+        return admin;
+    }
+
+    @Bean
+    public RabbitTemplate rabbitTemplate() {
+        RabbitTemplate rabbitTemplate=new RabbitTemplate(connectionFactory());
+        rabbitTemplate.setRoutingKey("eventsQueue");
+        rabbitTemplate.setQueue("eventsQueue");
+        return rabbitTemplate;
+    }
+
+    @Bean
+    public Queue queue() {
+       return new Queue("eventsQueue");
+    }
+
+    @Bean
+    @Autowired
+    public SimpleMessageListenerContainer messageListenerContainer(EmailQueueListener listener){
+        SimpleMessageListenerContainer container=new SimpleMessageListenerContainer(connectionFactory());
+        MessageListenerAdapter adapter=new MessageListenerAdapter(listener, "handleMessage");
+        container.setMessageListener(adapter);
+        container.addQueues(queue());
+        return container;
+    }
+
+}
+
+
+@Bean
+public SimpleMessageListenerContainer serviceListenerContainer() {
+    SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+    container.setConnectionFactory(rabbitConnectionFactory());
+    container.setQueues(requestQueue());
+    container.setMessageListener(new MessageListenerAdapter(new PojoListener()));
+    return container;
+}
+Where PojoListener is:
+
+public class PojoListener {
+
+    public String handleMessage(String foo) {
+        return foo.toUpperCase();
+    }
+
+}
+
+
+https://knallisworld.de/blog/2016/03/26/expose-a-java-method-with-amqp-and-spring-reloaded-with-java-dsl/
